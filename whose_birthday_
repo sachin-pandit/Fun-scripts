@@ -1,0 +1,29 @@
+if [ $# -gt 0 ]
+then
+	today="$1"
+	string="On"
+else
+	set `date +%D`
+
+	day=`echo $1 | cut -d"/" -f2 -`
+	month=`echo $1 | cut -d"/" -f1 -`
+
+	if [ $day -lt 10 ]
+	then
+		day=`expr $day + 10`
+		day=`expr $day - 10`
+		day=" $day"	
+	fi
+
+	if [ $month -lt 10 ]
+	then
+		month=`expr $month + 10`
+		month=`expr $month - 10`	
+		month=" $month"
+	fi
+	
+	today="$day/$month/"
+	string="Today's"
+fi
+echo -e $string "-" "\"$today\"" "Birthday(s) :"
+grep "`echo "$today"`" ~/p/private/birthday/birthday.op | cut -b -30 -

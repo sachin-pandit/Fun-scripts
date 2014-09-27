@@ -1,0 +1,20 @@
+# !/bin/bash
+
+mkdir ~/.trash 2>/dev/null
+
+while [ $# -ne 0 ]
+do
+    echo $1 >argfile
+    dir=`cat argfile | rev | cut -d"/" -f2- | rev`
+    if [ "$1" = "$dir" ]
+    then
+	dir=`pwd`
+    else
+	cd $dir
+	dir=`pwd`
+	cd $OLDPWD
+    fi
+    echo -e "\n#old dir tag#|$dir" >>$1
+    mv $1 ~/.trash/
+    shift
+done

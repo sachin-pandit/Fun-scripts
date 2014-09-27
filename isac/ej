@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ $# != 1 ]
+then
+	echo "$0: usage- '$0 delay'"
+	eject
+	i=5
+	while [ $i != 0 ]
+	do
+		echo "Closing in $i seconds..."
+		i=`expr $i - 1`
+		sleep 1
+	done
+	eject -t
+else
+	eject
+	sleep $1
+	eject -t
+fi

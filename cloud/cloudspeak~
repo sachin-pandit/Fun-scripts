@@ -1,0 +1,10 @@
+if [ $# -eq 0 ]
+then
+	echo "Usage: \$$0 sentence"
+	echo "(sentence="word1+word2+word3...)"
+	echo "(e.g: \$$0 \"hello+world\")"
+else
+	wget -q -U Mozilla -O $1.mp3 "http://translate.google.com/translate_tts?q=$1"
+	mplayer $1.mp3
+	rm $1.mp3
+fi

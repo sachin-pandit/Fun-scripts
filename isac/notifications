@@ -1,0 +1,68 @@
+set `date +%D`
+
+echo "Notifications :"
+FILE="/home/vinay/p/private/renewals"
+
+MONTH=`echo $1 | cut -d"/" -f1 - `
+DAY=`echo $1 | cut -d"/" -f2 - `
+YEAR=`echo $1 | cut -d"/" -f3 -`
+
+MONTH=`expr $MONTH + 1`
+MONTH=`expr $MONTH - 1`
+NEXT_MONTH=`expr $MONTH % 12`
+NEXT_MONTH=`expr $NEXT_MONTH + 1`
+
+if [ $MONTH -lt 10 ]
+then 
+	MONTH="0$MONTH"
+fi
+
+if [ $NEXT_MONTH -lt 10 ]
+then
+	NEXT_MONTH="0$NEXT_MONTH"
+fi
+
+i=$DAY
+
+today=`grep -c \`echo "$i/$MONTH/$YEAR"\` $FILE`
+if [ $today -ne 0 ]
+then
+	pingme 10
+fi
+
+while [ $i -ge $DAY ]
+do
+	if [ $i -lt 10 ]
+	then
+		i="0$i"
+	fi
+	grep `echo "$i/$MONTH/$YEAR"` $FILE
+	#echo "$i/$MONTH/$YEAR"
+	i=`expr $i + 1`
+	i=`expr $i % 31`
+done
+
+if [ $i -eq 0 ]
+then
+	i=31
+	grep `echo "$i/$MONTH/$YEAR"` $FILE
+	#echo "$i/$MONTH/$YEAR"
+fi
+
+if [ $NEXT_MONTH -eq "01" ]
+then
+	YEAR=`expr $YEAR + 1`
+fi
+
+i=1
+while [ $i -lt $DAY -a $i -ne 0 ]
+do
+	if [ $i -lt 10 ]
+	then
+		i="0$i"
+	fi
+	grep `echo "$i/$NEXT_MONTH/$YEAR"` $FILE
+	#echo "$i/$NEXT_MONTH/$YEAR"
+	i=`expr $i + 1`
+	i=`expr $i % 31`
+done

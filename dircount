@@ -1,0 +1,13 @@
+ls -1 > file
+dirs=0
+files=0
+while read line
+do
+	if [ -d $line ]
+	then 
+		dirs=`expr $dirs + 1`
+	else 
+		files=`expr $files + 1`
+	fi
+done < file
+echo $dirs $files

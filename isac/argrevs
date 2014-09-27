@@ -1,0 +1,18 @@
+if [ $# -eq 0 ]
+then
+	echo "Usage: $0 num1, num2, numN"
+	exit 1
+fi
+x=""
+echo -n "Numbers are : "
+for n in $@
+do
+  echo -n $n
+  echo -n " "
+  x="$n $x"
+done
+echo ""
+echo -	n "Reverse order: "
+echo $x
+
+

@@ -1,0 +1,17 @@
+#!/bin/bash
+
+cd ~/.trash/
+while [ $# -ne 0 ]
+do
+    if [ -f $1 ]
+    then
+	chmod -x $1
+	dest=`grep "#old dir tag#" $1 | cut -d"|" -f2-`
+	grep -v "#old dir tag#" $1 >.temp
+	mv .temp $1
+	mv $1 $dest
+    else
+	echo "$1 not found in trash"
+    fi
+    shift
+done

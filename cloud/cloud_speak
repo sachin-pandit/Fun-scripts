@@ -1,0 +1,17 @@
+echo $1 | tee argtemp
+first=`cut -d" " -f1 argtemp`
+ofile="$first.mp3"
+
+cd ~/p/voice/
+
+i=0
+while [ -f $ofile ]
+do
+	i=`expr $i + 1`
+	ofile="$first$i.mp3"
+done
+
+echo "ofile=$ofile"
+wget -q -U Mozilla -O ~/p/voice/$ofile "http://translate.google.com/translate_tts?q=$1"
+
+rm $OLDPWD/argtemp
